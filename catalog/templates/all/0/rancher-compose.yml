@@ -1,0 +1,169 @@
+.catalog:
+  name: "PROD-FULL-STACK"
+  version: "1.0"
+  description: "PROD-FULL-STACK"
+  uuid: all-0
+  questions:
+    - variable: "webport_vendas"
+      description: "Listen Port Televendas"
+      label: "Port:"
+      type: "int"
+      required: true
+      default: "8084"
+    - variable: "webport_pedido"
+      description: "Listen Port Pedido Eletrônico"
+      label: "Port:"
+      type: "int"
+      required: true
+      default: "8085"
+    - variable: "webport_orcamento"
+      description: "Listen Port Orçamento"
+      label: "Port:"
+      type: "int"
+      required: true
+      default: "8083"
+    - variable: "webport_nfserver"
+      description: "Listen Port NF-Server"
+      label: "Port:"
+      type: "int"
+      required: true
+      default: "8081"
+    - variable: "webport_gestaoweb"
+      description: "Listen Port Gestão Web"
+      label: "Port:"
+      type: "int"
+      required: true
+      default: "8082"
+    - variable: "webport_cargo"
+      description: "Listen Port Cargo"
+      label: "Port:"
+      type: "int"
+      required: true
+      default: "8087"
+    - variable: "webport_consolid"
+      description: "Listen Port Consolid"
+      label: "Port:"
+      type: "int"
+      required: true
+      default: "8080"
+    - variable: "ip_database"
+      description: "IP do banco de dados"
+      label: "Ip:"
+      type: "string"
+      required: true
+      default: ""
+    - variable: "database_port"
+      description: "Porta do banco de dados"
+      label: "Database Port:"
+      type: "int"
+      required: true
+      default: "1433"
+    - variable: "database_user"
+      description: "Usuário de acesso ao banco de dados"
+      label: "Database User:"
+      type: "string"
+      required: true
+      default: "sa"
+    - variable: "password_user"
+      description: "Senha de acesso ao banco de dados"
+      label: "Database Password:"
+      type: "password"
+      required: true
+    - variable: "named_prodution"
+      description: "Nome do banco Produção"
+      label: "Produção:"
+      type: "string"
+      required: true
+      default: ""
+    - variable: "named_archive"
+      description: "Nome do banco Arquivos"
+      label: "Arquivos:"
+      type: "string"
+      required: true
+      default: ""
+    - variable: "named_analyze"
+      description: "Nome do banco Análise"
+      label: "Análise:"
+      type: "string"
+      required: true
+      default: ""
+    - variable: "xms"
+      description: "Initial memory allocation pool"
+      label: "XMS:"
+      type: "int"
+      required: false
+      default: "256"
+    - variable: "xmx"
+      description: "Maximum memory allocation pool"
+      label: "XMX:"
+      type: "int"
+      required: false
+      default: "512"
+    - variable: "xmn"
+      description: "Size of the heap for the young generation"
+      label: "XMN:"
+      type: "int"
+      required: false
+      default: "128"
+    - variable: "host_label"
+      description: "Host for Service"
+      label: "Host Label:"
+      type: "string"
+      required: true
+      default: "client=none"
+    - variable: "webport_suite"
+      description: "Listen Port"
+      label: "Port:"
+      type: "int"
+      required: true
+      default: "8088"
+    - variable: "git_repo"
+      description: "Git repositório do ItecSuite"
+      label: "Git Repo:"
+      type: "string"
+      required: true
+      default: "https://github.com/Itecbrazil/ItecSuite.git"
+    - variable: "git_email"
+      description: "Git email"
+      label: "Git Email:"
+      type: "string"
+      required: true
+      default: "github@itecbrazil.com.br"
+    - variable: "git_name"
+      description: "Git Name"
+      label: "Git Name:"
+      type: "string"
+      required: true
+      default: "Itecbrazil"
+    - variable: "service_url_soa"
+      description: "Url do SOA Service"
+      label: "Soa Service URL:"
+      type: "string"
+      required: true
+      default: ""
+version: '2'
+services:
+  interface-pdv-consolid:
+    scale: 1
+    start_on_create: true
+  interface-pdv-cargo:
+    scale: 1
+    start_on_create: true
+  orcamento:
+    scale: 1
+    start_on_create: true
+  pedido-eletronico:
+    scale: 1
+    start_on_create: true
+  vendas:
+    scale: 1
+    start_on_create: true
+  nf-server:
+    scale: 1
+    start_on_create: true
+  gestao-web:
+    scale: 1
+    start_on_create: true
+  itec-suite:
+    scale: 1
+    start_on_create: true

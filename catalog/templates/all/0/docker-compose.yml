@@ -1,0 +1,169 @@
+version: '2'
+
+services:
+
+  vendas:
+      image: itecbrazil/vendas-docker:latest
+      restart: always
+      ports:
+        - "${webport_vendas}:8080"
+      hostname: vendas
+      environment:
+        - IP_DB_SQLSERVER="-DIP_DB_SQLSERVER=${ip_database}"
+        - PROD_DB_SQLSERVER="-DPROD_DB_SQLSERVER=${named_prodution}"
+        - PORT_DB_SQLSERVER="-DPORT_DB_SQLSERVER=${database_port}"
+        - USER_DB_SQLSERVER="-DUSER_DB_SQLSERVER=${database_user}"
+        - PASSWORD_DB_SQLSERVER="-DPASSWORD_DB_SQLSERVER=${password_user}"
+      labels:
+        io.rancher.scheduler.affinity:host_label: ${host_label}
+      logging:
+        driver: json-file
+        options:
+          max-size: "50m"
+          max-file: "5"
+
+  pedido-eletronico:
+      image: itecbrazil/pedidoeletronico-docker:latest
+      restart: always
+      ports:
+        - "${webport_pedido}:8080"
+      hostname: pedido-eletronico
+      environment:
+        - IP_DB_SQLSERVER=${ip_database}
+        - PROD_DB_SQLSERVER=${named_prodution}
+        - PORT_DB_SQLSERVER=${database_port}
+        - USER_DB_SQLSERVER=${database_user}
+        - PASSWORD_DB_SQLSERVER=${password_user}
+      labels:
+        io.rancher.scheduler.affinity:host_label: ${host_label}
+      logging:
+        driver: json-file
+        options:
+          max-size: "50m"
+          max-file: "5"
+
+  orcamento:
+      image: itecbrazil/orcamento-docker:latest
+      restart: always
+      ports:
+        - "${webport_orcamento}:8080"
+      hostname: orcamento
+      environment:
+        - IP_DB_SQLSERVER="-DIP_DB_SQLSERVER=${ip_database}"
+        - PROD_DB_SQLSERVER="-DPROD_DB_SQLSERVER=${named_prodution}"
+        - PORT_DB_SQLSERVER="-DPORT_DB_SQLSERVER=${database_port}"
+        - USER_DB_SQLSERVER="-DUSER_DB_SQLSERVER=${database_user}"
+        - PASSWORD_DB_SQLSERVER="-DPASSWORD_DB_SQLSERVER=${password_user}"
+      labels:
+        io.rancher.scheduler.affinity:host_label: ${host_label}
+      logging:
+        driver: json-file
+        options:
+          max-size: "50m"
+          max-file: "5"
+
+  nf-server:
+      image: itecbrazil/nfserver-docker:latest
+      restart: always
+      ports:
+        - "${webport_nfserver}:8080"
+      hostname: nf-server
+      environment:
+        - IP_DB_SQLSERVER="-DIP_DB_SQLSERVER=${ip_database}"
+        - PROD_DB_SQLSERVER="-DPROD_DB_SQLSERVER=${named_prodution}"
+        - PORT_DB_SQLSERVER="-DPORT_DB_SQLSERVER=${database_port}"
+        - USER_DB_SQLSERVER="-DUSER_DB_SQLSERVER=${database_user}"
+        - PASSWORD_DB_SQLSERVER="-DPASSWORD_DB_SQLSERVER=${password_user}"
+      labels:
+        io.rancher.scheduler.affinity:host_label: ${host_label}
+      logging:
+        driver: json-file
+        options:
+          max-size: "50m"
+          max-file: "5"
+
+  gestao-web:
+      image: itecbrazil/gestaoweb-docker:latest
+      restart: always
+      ports:
+        - "${webport_gestaoweb}:8080"
+      hostname: gestao-web
+      environment:
+        - IP_DB_SQLSERVER="-DIP_DB_SQLSERVER=${ip_database}"
+        - PROD_DB_SQLSERVER="-DPROD_DB_SQLSERVER=${named_prodution}"
+        - ARQ_DB_SQLSERVER="-DARQ_DB_SQLSERVER=${named_archive}"
+        - AN_DB_SQLSERVER="-DAN_DB_SQLSERVER=${named_analyze}"
+        - PORT_DB_SQLSERVER="-DPORT_DB_SQLSERVER=${database_port}"
+        - USER_DB_SQLSERVER="-DUSER_DB_SQLSERVER=${database_user}"
+        - PASSWORD_DB_SQLSERVER="-DPASSWORD_DB_SQLSERVER=${password_user}"
+      labels:
+        io.rancher.scheduler.affinity:host_label: ${host_label}
+      logging:
+        driver: json-file
+        options:
+          max-size: "50m"
+          max-file: "5"
+
+  interface-pdv-cargo:
+      image: itecbrazil/interfacepdv-docker:latest
+      restart: always
+      ports:
+        - "${webport_cargo}:8080"
+      hostname: interface-pdv-cargo
+      environment:
+        - IP_DB_SQLSERVER="-DIP_DB_SQLSERVER=${ip_database}"
+        - PROD_DB_SQLSERVER="-DPROD_DB_SQLSERVER=${named_prodution}"
+        - PORT_DB_SQLSERVER="-DPORT_DB_SQLSERVER=${database_port}"
+        - USER_DB_SQLSERVER="-DUSER_DB_SQLSERVER=${database_user}"
+        - PASSWORD_DB_SQLSERVER="-DPASSWORD_DB_SQLSERVER=${password_user}"
+        - XMS="${xms}m"
+        - XMX="${xmx}m"
+        - XMN="${xmn}m"
+        - IPDV_CONSOLID="false"
+        - IPDV_CARGO="true"
+      labels:
+        io.rancher.scheduler.affinity:host_label: ${host_label}
+      logging:
+        driver: json-file
+        options:
+          max-size: "50m"
+          max-file: "5"
+
+  interface-pdv-consolid:
+      image: itecbrazil/interfacepdv-docker:latest
+      restart: always
+      ports:
+        - "${webport_consolid}:8080"
+      hostname: interface-pdv-consolid
+      environment:
+        - IP_DB_SQLSERVER="-DIP_DB_SQLSERVER=${ip_database}"
+        - PROD_DB_SQLSERVER="-DPROD_DB_SQLSERVER=${named_prodution}"
+        - PORT_DB_SQLSERVER="-DPORT_DB_SQLSERVER=${database_port}"
+        - USER_DB_SQLSERVER="-DUSER_DB_SQLSERVER=${database_user}"
+        - PASSWORD_DB_SQLSERVER="-DPASSWORD_DB_SQLSERVER=${password_user}"
+        - XMS="${xms}m"
+        - XMX="${xmx}m"
+        - XMN="${xmn}m"
+        - IPDV_CONSOLID="true"
+        - IPDV_CARGO="false"
+      labels:
+        io.rancher.scheduler.affinity:host_label: ${host_label}
+      logging:
+        driver: json-file
+        options:
+          max-size: "50m"
+          max-file: "5"
+
+  itec-suite:
+      image: itecbrazil/itec-suite:latest
+      hostname: suite
+      restart: always
+      ports:
+        - "${webport_suite}:80"
+      environment:
+        GIT_REPO: ${git_repo}
+        GIT_EMAIL: ${git_email}
+        GIT_NAME: ${git_name}
+        SERVICE_URL: ${service_url_soa}
+      labels:
+        io.rancher.scheduler.affinity:host_label: ${host_label}
